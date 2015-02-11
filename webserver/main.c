@@ -32,7 +32,7 @@ int main (){
 			}
 			/* On peut maintenant dialoguer avec le client */
 	
-			const char * message_bienvenue = " Bonjour, bienvenue sur mon serveur.\n" ;
+			const char * message_bienvenue = " Bonjour, bienvenue sur mon serveur.\n," ;
 			int i;
 			
 			for (i=1 ; i<11; i++){
