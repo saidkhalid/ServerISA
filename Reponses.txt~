@@ -1,0 +1,11 @@
+							Fichier Réponses 
+
+1) Quand on quitte le serveur et qu'on le relance il y a une erreur dans le write (file descriptor error).
+
+2) Quand on lance notre serveur et puis qu'on execute le commande "nc localhost 8080" le message s'affiche bien une seconde après grâce au "sleep(1)". Mais avec la commande "nc -z 127.0.0.1 8080" rien ne se passe.
+
+3) Avec la commande "telnet ::1 8080" une erreur se produit, la connexion est refusée.
+
+4) Quand on lance deux clients simultanément, ça ne fonctionne pas, car le processus ne peut pas accepter deux connexions simultanément. Pour remédier à ce probleme, on doit executer les "accept" dans un processus fils pour que çe ne soit pas bloquant.
+
+
