@@ -10,14 +10,6 @@
 
 
 
-void intitialiser_signaux(){
-if (signal(SIGPIPE ,SIG_IGN ) == SIG_ERR )
-	{
-	perror ("signal");
-	
-	}
-}
-
 int main (){
 
 
@@ -33,6 +25,7 @@ int main (){
 		socket_client = accept(socket_serveur, NULL, NULL);
 		pid=fork();
 		if(pid==0){
+			
 			if (socket_client == -1){
 				perror ( " accept " );
 				/* traitement d ’ erreur */
@@ -41,6 +34,7 @@ int main (){
 	
 			const char * message_bienvenue = " Bonjour, bienvenue sur mon serveur.\n" ;
 			int i;
+			
 			for (i=1 ; i<11; i++){
 				if (write(socket_client, message_bienvenue, strlen(message_bienvenue))==-1){
 					perror("write");
@@ -55,6 +49,7 @@ int main (){
 			
 			exit(0);
 		}
+		initialiser_signaux();
 		close(socket_client);
 	}
 }
