@@ -12,6 +12,7 @@
 
 int creer_serveur(int port){
 	int socket_serveur ;
+	int optval = 1;
 	socket_serveur = socket(AF_INET, SOCK_STREAM, 0);
 
 	if(socket_serveur == -1){
@@ -37,6 +38,13 @@ int creer_serveur(int port){
 		return -1;
 		/* traitement d ’ erreur */
 	}
+	
+	if ( setsockopt ( socket_serveur, SOL_SOCKET , SO_REUSEADDR , & optval , sizeof ( int )) == -1){
+		perror ( " Can not set SO_REUSEADDR option " );
+	}
+	
+	
+
 	
 	return socket_serveur;	
 }
