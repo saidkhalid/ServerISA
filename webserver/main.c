@@ -9,6 +9,7 @@
 #include <signal.h>
 
 
+	
 
 int main (){
 
@@ -19,8 +20,14 @@ int main (){
 	int socket_serveur = creer_serveur(8080);
 	int pid;
 	FILE *fd;
-	 char message[256];
-	//char buffer[256];
+	char message[256];
+	char get[3]="GET";
+	
+	char url[256];
+	char http[256];
+	int M; 
+	int m;
+
 	if(socket_serveur==-1){
 		return 1;
 	}
@@ -55,19 +62,34 @@ int main (){
 			}
 			
 			exit(0);	*/
+
+
 			if(fd==NULL){
 				perror("fgets");
 				return -1;
 			}
-			while(fgets(message,256,fd)!=NULL){
-				printf("%s",message);
-				fprintf(fd,"%s",message);
+				
+			while((fgets(message,256,fd))!=NULL){
+	
+			if((message[0]==get[0]) && (message[1]==get[1]) && (message[2]==get[2])){
+					perror("ligne");
 			}
+			sscanf(message, "%s %s HTTP/%d.%d",url,http,&M,&m);
+			if((M!=1) || (m!=0 && m!=1)){
+			    printf("erreur de saisie \n");
+			}	
+
+			
+				fprintf(fd,"%s",message);
+				
+			}
+	printf("%s",url);
 			fclose(fd);
 		}
+}
 		
 		
 		initialiser_signaux();
 		close(socket_client);
 	}
-}
+
