@@ -40,7 +40,7 @@ int creer_serveur(int port){
 		return -1;
 		/* traitement de l ’ erreur */
 	}
-
+    
 	/* Utilisation de la socket serveur */
 	struct sockaddr_in saddr ;
 	saddr.sin_family = AF_INET; /* Socket ipv4 */
