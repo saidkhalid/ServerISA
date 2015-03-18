@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include "socket.h"
+
 #include <sys/types.h> /* See NOTES */
+
+#include <sys/types.h>          /* See NOTES */
+
 #include <sys/socket.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -9,6 +13,7 @@
 #include <signal.h>
 
 enum http_method {
+
 	HTTP_GET ,
 	HTTP_UNSUPPORTED ,
 	};
@@ -32,8 +37,8 @@ int parse_http_request ( const char * request_line , http_request * request ){
 	printf(request_line);
 	if((request_line[0]==get[0]) && (request_line[1]==get[1]) && (request_line[2]==get[2])){
 		//perror("ligne");
-		request->method = HTTP_GET;
 		printf("GET ok \n");
+		request->method = HTTP_GET;
 		/*	
 		* Stocke la requete dans les variables définies plus haut et vérifie que le contenu de M et m est le bon.
 		*/
@@ -136,6 +141,7 @@ int main (){
 	}
 	initialiser_signaux();
 	close(socket_client);
-	return 0;
+
+  
 }
 

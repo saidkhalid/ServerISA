@@ -35,7 +35,7 @@ int creer_serveur(int port){
 	int optval = 1;
 	socket_serveur = socket(AF_INET, SOCK_STREAM, 0);
 	if(socket_serveur == -1){
-		error (" socket_serveur ");
+		perror (" socket_serveur ");
 		return -1;
 	/* traitement de l ’ erreur */
 	}
