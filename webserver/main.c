@@ -27,16 +27,25 @@ int parse_http_request ( const char * request_line , http_request * request ){
     char url[256],http[256];
     int M,m;
     
+    /*
+     * Vérifie si le premier mot de la requete est bien "GET"
+     */
     if((request_line[0]==get[0]) && (request_line[1]==get[1]) && (request_line[2]==get[2])){
         //perror("ligne");
         request->method = HTTP_GET;
         
+        /*
+         * Stocke la requete dans les variables définies plus haut et vérifie que le contenu de M et m est le bon.
+         */
         sscanf(request_line, "%s %s HTTP/%d.%d %s",url,http,&M,&m,slash);
         if((M==1) || (m==0 && m==1)){
             // printf("erreur de saisie \n");
             request->minor_version = m;
             request->major_version = M;
             
+            /*
+             * La requete est valide que si la forme de l'entete est vérifié (conditions précédentes) et le premier caractère qui le suive est '/'
+             */
             if (slash[0]=='/') {
                 //if (message[0] == '\n' || (message[0] == '\r' && message[1] == '\n')) {
                 //fprintf(fd, "%s", "message is vide");
@@ -45,20 +54,26 @@ int parse_http_request ( const char * request_line , http_request * request ){
         }
     }
     return 0;
-        //fprintf(fd,"%s",message);
 }
 
 
 char * fgets_or_exit ( char * message , int size , FILE * fd ){
     
+    /*
+     * si le client est deconnecté on interromp le processus
+     */
     if(fd==NULL){
         perror("fgets");
         exit(1);
     }
+    
+    /*
+     * si le client est connecté on fait un appel à fgets
+     */
     return fgets(message,size,fd);
-    //printf("%s",url);
+    /*printf("%s",url);
     fclose(fd);
-    exit(1);
+    exit(1);*/
 }
 
 
@@ -76,7 +91,12 @@ int main (){
     
     int pid;
     
-    http_request * request = NULL ;
+    http_request * request = malloc(256) ; //la fameuse structure qui sera modifier par parse_http_request
+    request->method = 0;
+    request->major_version = 0 ;
+    request->minor_version = 0 ;
+    request->url = 0;
+    
     
     if(socket_serveur==-1){
         return 1;
