@@ -26,6 +26,27 @@ typedef struct
 	char * url ;
 } http_request ;
 
+void skip_headers(FILE *client){
+	char message[1024];
+	if(strlen(client)<2){
+		fgets(client,1024,message);
+	}	
+}
+void send_status(FILE *client , int code , const char *reason_phrase){
+	//code=404;
+	char http[256];
+	//reason_phrase="NOT FOUND \n";
+	int m=1,M=1;
+	
+	fprintf(client,"%s HTTP/%d.%d %d %s",http,M,m,code,reason_phrase);
+}
+
+void send_response(FILE *client , int code , const char *reason_phrase ,const char *message_body){
+
+	send_status(client,code,reason_phrase);
+	
+}
+
 int parse_http_request ( const char * request_line , http_request * request ){
 	char slash[256];
 	char get[3]="GET";
@@ -80,6 +101,11 @@ char * fgets_or_exit ( char * message , int size , FILE * fd ){
 		exit(1);*/
 }
 
+/*void skip_headers(FILE *client){
+	fgets_or_exit(
+}*/
+
+
 	
 int main (){
 	/* Arnold Robbins in the LJ of February ’95 , describing RCS */
@@ -120,6 +146,8 @@ int main (){
 			fprintf(fd, "%s", messageError);
 		}
 		fflush(fd);
+		
+		
 	/* On peut maintenant dialoguer avec le client */
 	/*const char * message_bienvenue = " Bonjour, bienvenue sur mon serveur.\n," ;
 	int i;
