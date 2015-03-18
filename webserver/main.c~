@@ -32,8 +32,8 @@ int parse_http_request ( const char * request_line , http_request * request ){
 	printf(request_line);
 	if((request_line[0]==get[0]) && (request_line[1]==get[1]) && (request_line[2]==get[2])){
 		//perror("ligne");
-		printf("GET ok \n");
 		request->method = HTTP_GET;
+		printf("GET ok \n");
 		/*	
 		* Stocke la requete dans les variables définies plus haut et vérifie que le contenu de M et m est le bon.
 		*/
