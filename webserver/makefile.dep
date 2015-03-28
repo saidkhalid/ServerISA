@@ -1,2 +1,4 @@
-main.o: main.c socket.h
-socket.o: socket.c socket.h
+main.o: main.c socket.h query.h main.h
+query.o: query.c socket.h query.h main.h
+signaux.o: signaux.c socket.h main.h query.h signaux.h
+socket.o: socket.c socket.h main.h query.h
