@@ -12,6 +12,9 @@
 #include <stdlib.h>
 #include <netinet/in.h>
 #include <signal.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 
 enum http_method {
     
@@ -49,6 +52,30 @@ void send_response(FILE *client , int code , const char *reason_phrase ,const ch
         perror("error send_response");
     }
     
+}
+char * rewrite_url(char * url){
+    char * nv_url;
+    nv_url=strchr(url,'?');
+    if(nv_url!=NULL){
+        *url='\0';
+    }
+    if(strcmp(url,"/")==0){
+        strcat(url,"monsite.html");
+    }
+    
+    return url;
+}
+
+int check_and_open ( const char * url , const char * document_root ){
+    int fd;
+    char buf[1024];
+    strcpy(buf,document_root);
+    if((fd=open(strcat(buf,url),O_RDONLY))==-1){
+        perror("error open");
+        return -1;
+        exit(0);
+    }
+    return fd;
 }
 
 int parse_http_request ( const char * request_line , http_request * request ){
